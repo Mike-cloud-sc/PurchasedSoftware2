@@ -31,7 +31,7 @@ import os
 # record_no = df.iloc[0]  #  record-no is the entire row, all columns
 # df.to_pickle('software.pkl')
 
-software_file = '/Users/michaelpauken/PythonActiveProjects/PurchasedSoftware/software.pkl'
+software_file = '/Users/michaelpauken/PythonActiveProjects/PurchasedSoftware2/software.pkl'
 df = pd.read_pickle(software_file)  # create dataframe of software products from pickle file
 
 

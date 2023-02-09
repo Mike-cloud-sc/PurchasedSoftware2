@@ -49,8 +49,9 @@ def search(search_arg):
             software = row.software
             vendor_name = row.vendor_name
 
+            index = str(index).zfill(3)
             my_list1.append(f" {'   '} {index} {' ' * 11} {software}\n")
-            my_list2.append(f'{"   "}vendor_name')
+            my_list2.append(f' {"  "} {index} {" " * 5} {vendor_name}\n')
 
     # ['software', 'where_purchased', 'vendor_name', 'date_purch', 'cost', 'free', 'one_time', 'annual', 'notes']
     if count_list_items > 0:
@@ -202,11 +203,11 @@ sg.theme('light green')
 layout = [
     [sg.Text('Enter Search Argument'), sg.Input(key='-lineEdit_search-', size=(30, 1), expand_x=True),
      sg.Button('Search', bind_return_key=True)],
-    [sg.T('RECORD#', size=(10, 1)), sg.T('SOFTWARE PACKAGE NAME', size=(40, 1)), sg.T('VENDOR NAME', size=(30, 1))],
+    [sg.T('RECORD#', size=(10, 1)), sg.T('SOFTWARE PACKAGE NAME', size=(45, 1)), sg.T('VENDOR NAME', size=(30, 1))],
     [sg.Listbox(empty_list, size=(50, 10), select_mode=sg.LISTBOX_SELECT_MODE_EXTENDED, no_scrollbar=False,
                 horizontal_scroll=False, expand_x=True, expand_y=True, enable_events=True, k='-LBOX1-'),
-     sg.Listbox(empty_list, size=(25, 10), select_mode=sg.LISTBOX_SELECT_MODE_EXTENDED, no_scrollbar=False,
-                horizontal_scroll=False, expand_x=True, expand_y=True, enable_events=True, k='-LBOX2-')],
+     sg.Listbox(empty_list, size=(25, 10), select_mode=sg.LISTBOX_SELECT_MODE_EXTENDED, no_scrollbar=True,
+                horizontal_scroll=False, expand_x=True, expand_y=True, enable_events=False, k='-LBOX2-')],
     [sg.Text('Software Package', size=(14)), sg.Push(), sg.Input(key='-SOFTWARE NAME-', size=(60), expand_x=True)],
     [sg.Text('Where Purchased', size=(14)), sg.Push(), sg.Input(key='-WHERE-', size=(60), expand_x=True)],
     [sg.Text('Vendor Name', size=(14)), sg.Push(), sg.Input(key='-VENDOR-', size=(60), expand_x=True)],
@@ -238,13 +239,12 @@ while True:
         search_arg = window['-lineEdit_search-'].get().lower()
         my_list = search(search_arg)  # goto search function
     try:
-        if event == '-LBOX1-' or event == '-LBOX2-':
+        if event == '-LBOX1-':   # or event == '-LBOX2-':
             item = window['-LBOX1-'].get()
-
             item = item[0]
             item = int(item.split()[0])  # get the first character in the string and convert to integer
-
             list_changed(item)  # call function to populate the update fields
+
     except Exception as e:
         sg.popup('No Record Found', any_key_closes=True, background_color='red', font=('Helvetica 16'),
                  location=(1000, 90))
